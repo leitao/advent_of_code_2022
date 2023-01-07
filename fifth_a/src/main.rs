@@ -1,4 +1,6 @@
 use std::{fs, collections::HashMap, hash::Hasher};
+use itertools::Itertools; // 0.8.2
+
 
 
 fn read_line(line: &str, dict: &mut HashMap::<usize, Vec<char>>) {
@@ -41,13 +43,9 @@ fn mov(line: &str, dict: &mut HashMap<usize, Vec<char>>) {
 }
 
 fn get_result(dict: HashMap::<usize, Vec<char>>) {
-    // let k  = &mut dict.keys().collect::<Vec<&usize>>();
-    // let mut foo = Vec::new();
-    let m  = *dict.keys().max().unwrap();
+    for (_, k) in dict.iter().sorted() {
+        print!("{}", k.last().unwrap());
 
-    for i in 1..=m {
-        let d = &dict[&i];
-        print!("{}", d.last().unwrap());
     }
 
     println!("" );
