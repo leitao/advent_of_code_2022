@@ -1,9 +1,7 @@
-use std::{fs, collections::HashMap, hash::Hasher};
-use itertools::Itertools; // 0.8.2
+use std::{fs, collections::BTreeMap};
 
 
-
-fn read_line(line: &str, dict: &mut HashMap::<usize, Vec<char>>) {
+fn read_line(line: &str, dict: &mut BTreeMap::<usize, Vec<char>>) {
 
     let l = line.len();
     for col in (1..l).step_by(4) {
@@ -24,7 +22,7 @@ fn read_line(line: &str, dict: &mut HashMap::<usize, Vec<char>>) {
 
 }
 
-fn mov(line: &str, dict: &mut HashMap<usize, Vec<char>>) {
+fn mov(line: &str, dict: &mut BTreeMap<usize, Vec<char>>) {
     let num = line.split(' ').nth(1).unwrap().parse::<usize>().unwrap();
     let from = line.split(' ').nth(3).unwrap().parse::<usize>().unwrap();
     let to = line.split(' ').nth(5).unwrap().parse::<usize>().unwrap();
@@ -42,9 +40,9 @@ fn mov(line: &str, dict: &mut HashMap<usize, Vec<char>>) {
     // println!(" {:#?}", dict);
 }
 
-fn get_result(dict: HashMap::<usize, Vec<char>>) {
-    for (_, k) in dict.iter().sorted() {
-        print!("{}", k.last().unwrap());
+fn get_result(dict: BTreeMap::<usize, Vec<char>>) {
+    for (_, v) in dict {
+         print!("{}", v.last().unwrap());
 
     }
 
@@ -52,7 +50,7 @@ fn get_result(dict: HashMap::<usize, Vec<char>>) {
 
 }
 fn main() {
-    let mut dict: HashMap<usize, Vec::<char>> = HashMap::new();
+    let mut dict: BTreeMap<usize, Vec::<char>> = BTreeMap::new();
     let file_path = "input.txt";
     let contents = match fs::read_to_string(file_path) {
         Ok(n) => n,
